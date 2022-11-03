@@ -9,5 +9,6 @@ namespace Training.DomainClasses
         public int yearOfBirth { get; set; }
         public float price { get; set; }
         public Species species { get; set; }
+
     }
 }

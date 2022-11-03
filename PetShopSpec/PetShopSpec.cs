@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Training.DomainClasses;
 using Machine.Specifications;
-using Moq;
-using Moq.AutoMock;
 using It = Machine.Specifications.It;
 
 namespace Training.Specificaton
@@ -65,7 +63,6 @@ namespace Training.Specificaton
         static Pet pet;
     }
 
-    [Ignore("this will be implemented 2nd")]
     public class when_adding_an_existing_pet_again_ : pet_shop_concern
     {
         Establish context = () =>
@@ -83,7 +80,6 @@ namespace Training.Specificaton
         private static Pet pet;
     }
 
-    [Ignore("this will be implemented 3rd")]
     public class when_adding_a_new_pet_with_existing_name_ : pet_shop_concern
     {
         Establish context = () =>
