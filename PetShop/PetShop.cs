@@ -32,7 +32,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllCats()
         {
-            foreach (var pet in _petsInTheStore)
+           foreach (var pet in _petsInTheStore)
             {
                 if (pet.species == Species.Cat)
                 {
