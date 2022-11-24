@@ -68,14 +68,16 @@ namespace Training.DomainClasses
 
     public class SpeciesCriteria : Criteria<Pet>
     {
+        private readonly Species _species;
+
         public SpeciesCriteria(Species species)
         {
-            throw new NotImplementedException();
+            _species = species;
         }
 
         public bool IsSatisfiedBy(Pet item)
         {
-            throw new NotImplementedException();
+            return item.species == _species;
         }
     }
 }
