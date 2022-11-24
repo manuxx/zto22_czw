@@ -75,9 +75,9 @@ namespace Training.DomainClasses
             _species = species;
         }
 
-        public bool IsSatisfiedBy(Pet item)
+        public bool IsSatisfiedBy(Pet pet)
         {
-            return item.species == _species;
+            return pet.species == _species;
         }
     }
 }
