@@ -35,7 +35,7 @@ static internal class EnumerableTools
     }
 }
 
-internal interface Criteria<TItem>
+public interface Criteria<TItem>
 {
     bool IsSatisfiedBy(TItem item);
 }
