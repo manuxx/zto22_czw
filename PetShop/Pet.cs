@@ -45,7 +45,7 @@ namespace Training.DomainClasses
         public float price { get; set; }
         public Species species { get; set; }
 
-        public static Criteria<Pet> IsSpeciesOf(Species species)
+        public static ICriteria<Pet> IsSpeciesOf(Species species)
         {
             return new SpeciesCriteria(species);
         }
@@ -66,7 +66,7 @@ namespace Training.DomainClasses
         }
     }
 
-    public class SpeciesCriteria : Criteria<Pet>
+    public class SpeciesCriteria : ICriteria<Pet>
     {
         private readonly Species _species;
 
@@ -75,9 +75,9 @@ namespace Training.DomainClasses
             _species = species;
         }
 
-        public bool IsSatisfiedBy(Pet pet)
+        public bool IsSatisfiedBy(Pet item)
         {
-            return pet.species == _species;
+            return item.species == _species;
         }
     }
 }
