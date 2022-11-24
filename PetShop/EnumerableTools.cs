@@ -23,4 +23,14 @@ static internal class EnumerableTools
         }
     }
 
+    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> items, Criteria<TItem> criteria)
+    {
+        foreach (var item in items)
+        {
+            if (criteria.IsSatisfiedBy(item))
+            {
+                yield return item;
+            }
+        }
+    }
 }
