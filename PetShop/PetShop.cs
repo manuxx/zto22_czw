@@ -57,7 +57,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllCatsOrDogs()
         {
-            return _petsInTheStore.AllThat(new Alternative(Pet.IsSpeciesOf(Species.Cat),Pet.IsSpeciesOf(Species.Dog)));
+            return _petsInTheStore.AllThat(new Alternative<Pet>(Pet.IsSpeciesOf(Species.Cat),Pet.IsSpeciesOf(Species.Dog)));
         }
 
         public IEnumerable<Pet> AllPetsButNotMice()
@@ -67,7 +67,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllDogsBornAfter2010()
         {
-            return _petsInTheStore.AllThat((pet => pet.species == Species.Dog && pet.yearOfBirth > 2010));
+            return _petsInTheStore.AllThat(new Conjunction<Pet>(Pet.IsSpeciesOf(Species.Dog), Pet.IsBornAfter(2010)));
         }
 
         public IEnumerable<Pet> AllMaleDogs()
