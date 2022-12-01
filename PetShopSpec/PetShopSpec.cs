@@ -204,7 +204,7 @@ namespace Training.Specificaton
     {
         private It should_be_able_to_find_all_cats = () =>
         {
-            ICriteria<Pet> criteria = Where_Pet
+            ICriteria<Pet> criteria = Where<Pet>
                                         .HasAn(p=>p.species)
                                         .EqualTo(Species.Cat);
             var foundPets = subject.AllPets()
@@ -213,7 +213,8 @@ namespace Training.Specificaton
         };
         private It should_be_able_to_find_all_mice = () =>
         {
-            var foundPets = subject.AllMice();
+            var criteria = Where<Pet>.HasAn(p=>p.species).EqualTo(Species.Mouse);
+            var foundPets = subject.AllPets().ThatSatisfy(criteria);
             foundPets.ShouldContainOnly(mouse_Dixie, mouse_Jerry);
         };
     
@@ -258,26 +259,26 @@ namespace Training.Specificaton
 
     }
 
-    internal class Where_Pet
+    internal class Where<TItem>
     {
-        public static CriteriaBuilder HasAn(Func<Pet, Species> selector)
+        public static CriteriaBuilder<TItem,TProperty> HasAn<TProperty>(Func<TItem, TProperty> selector)
         {
-            return new CriteriaBuilder(selector);
+            return new CriteriaBuilder<TItem,TProperty>(selector);
         }
     }
 
-    internal class CriteriaBuilder  
+    internal class CriteriaBuilder<TItem,TProperty>  
     {
-        private readonly Func<Pet, Species> _selector;
+        private readonly Func<TItem, TProperty> _selector;
 
-        public CriteriaBuilder(Func<Pet, Species> selector)
+        public CriteriaBuilder(Func<TItem, TProperty> selector)
         {
             _selector = selector;
         }
 
-        public ICriteria<Pet> EqualTo(Species species)
+        public ICriteria<TItem> EqualTo(TProperty species)
         {
-            return new AnonymousCriteria<Pet>(pet=>_selector(pet).Equals(species));
+            return new AnonymousCriteria<TItem>(pet=>_selector(pet).Equals(species));
         }
     }
 
