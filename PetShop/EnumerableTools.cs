@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Training.DomainClasses;
 
-static internal class EnumerableTools
+public static class EnumerableTools
 {
     public static IEnumerable<TItem> OneAtATime<TItem>(this IEnumerable<TItem> items)
     {
@@ -14,7 +14,7 @@ static internal class EnumerableTools
     }
 
 
-    public static IEnumerable<TItem> AllThat<TItem>(this IEnumerable<TItem> items, ICriteria<TItem> criteria)
+    public static IEnumerable<TItem> ThatSatisfy<TItem>(this IEnumerable<TItem> items, ICriteria<TItem> criteria)
     {
         foreach (var item in items)
         {

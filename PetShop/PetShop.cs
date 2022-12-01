@@ -28,7 +28,7 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllCats()
         {
-            return _petsInTheStore.AllThat(Pet.IsSpeciesOf(Species.Cat));
+            return _petsInTheStore.ThatSatisfy(Pet.IsSpeciesOf(Species.Cat));
                 
         }
 
@@ -41,43 +41,43 @@ namespace Training.DomainClasses
 
         public IEnumerable<Pet> AllMice()
         {
-            return _petsInTheStore.AllThat(Pet.IsSpeciesOf(Species.Mouse));
+            return _petsInTheStore.ThatSatisfy(Pet.IsSpeciesOf(Species.Mouse));
           
         }
 
         public IEnumerable<Pet> AllPetsBornAfter2010()
         {
-            return _petsInTheStore.AllThat(Pet.IsBornAfter(2010));
+            return _petsInTheStore.ThatSatisfy(Pet.IsBornAfter(2010));
         }
 
         public IEnumerable<Pet> AllFemalePets()
         {
-            return _petsInTheStore.AllThat(Pet.IsFemale());
+            return _petsInTheStore.ThatSatisfy(Pet.IsFemale());
         }
 
         public IEnumerable<Pet> AllCatsOrDogs()
         {
-            return _petsInTheStore.AllThat(Pet.IsSpeciesOf(Species.Cat).Or(Pet.IsSpeciesOf(Species.Dog)));
+            return _petsInTheStore.ThatSatisfy(Pet.IsSpeciesOf(Species.Cat).Or(Pet.IsSpeciesOf(Species.Dog)));
         }
 
         public IEnumerable<Pet> AllPetsButNotMice()
         {
-            return _petsInTheStore.AllThat(new Negation<Pet>(Pet.IsSpeciesOf(Species.Mouse)));
+            return _petsInTheStore.ThatSatisfy(new Negation<Pet>(Pet.IsSpeciesOf(Species.Mouse)));
         }
 
         public IEnumerable<Pet> AllDogsBornAfter2010()
         {
-            return _petsInTheStore.AllThat(Pet.IsSpeciesOf(Species.Dog).And(Pet.IsBornAfter(2010)));
+            return _petsInTheStore.ThatSatisfy(Pet.IsSpeciesOf(Species.Dog).And(Pet.IsBornAfter(2010)));
         }
 
         public IEnumerable<Pet> AllMaleDogs()
         {
-            return _petsInTheStore.AllThat(Pet.IsMale().And(Pet.IsSpeciesOf(Species.Dog)));
+            return _petsInTheStore.ThatSatisfy(Pet.IsMale().And(Pet.IsSpeciesOf(Species.Dog)));
         }
 
         public IEnumerable<Pet> AllPetsBornAfter2011OrRabbits()
         {
-            return _petsInTheStore.AllThat(Pet.IsBornAfter(2011).Or(Pet.IsSpeciesOf(Species.Rabbit)));
+            return _petsInTheStore.ThatSatisfy(Pet.IsBornAfter(2011).Or(Pet.IsSpeciesOf(Species.Rabbit)));
         }
     }
 }
