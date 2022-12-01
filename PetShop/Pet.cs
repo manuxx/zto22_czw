@@ -60,11 +60,6 @@ namespace Training.DomainClasses
             return new SexCriteria(Sex.Female);
         }
 
-        public static Predicate<Pet> IsNotSpeciesOf(Species species)
-        {
-            return pet => pet.species!= species;
-        } 
-        
         public class BornAfterCriteria : ICriteria<Pet>
         {
             private readonly int _year;
