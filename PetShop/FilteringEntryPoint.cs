@@ -2,11 +2,11 @@
 
 namespace Training.Specificaton
 {
-    internal class CriteriaBuilder<TItem,TProperty> 
+    public class FilteringEntryPoint<TItem,TProperty> 
     {
         public readonly Func<TItem, TProperty> _selector;
 
-        public CriteriaBuilder(Func<TItem, TProperty> selector)
+        public FilteringEntryPoint(Func<TItem, TProperty> selector)
         {
             _selector = selector;
         }
