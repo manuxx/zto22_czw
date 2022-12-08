@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Training.DomainClasses;
 using Machine.Specifications;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using It = Machine.Specifications.It;
 
 namespace Training.Specificaton
@@ -238,7 +239,7 @@ namespace Training.Specificaton
         };
         private It should_be_able_to_find_all_pets_born_after_2010 = () =>
         {
-            var criteria = Where<Pet>.HasAn(p => p.yearOfBirth).GreaterThan(2010);
+            var criteria = Where<Pet>.HasComparable(p => p.yearOfBirth).GreaterThan(2010);
             var foundPets = subject.AllPets().ThatSatisfy(criteria);
             foundPets.ShouldContainOnly(dog_Pluto, rabbit_Fluffy, mouse_Dixie, mouse_Jerry);
         };
@@ -264,13 +265,17 @@ namespace Training.Specificaton
 
     internal class Where<TItem>
     {
-        public static CriteriaBuilder<TItem,TProperty> HasAn<TProperty>(Func<TItem, TProperty> selector)
+        public static CriteriaBuilder<TItem,TProperty> HasAn<TProperty>(Func<TItem, TProperty> selector) 
         {
             return new CriteriaBuilder<TItem,TProperty>(selector);
         }
+        public static ComparableCriteriaBuilder<TItem, TProperty> HasComparable<TProperty>(Func<TItem, TProperty> selector) where TProperty : IComparable<TProperty>
+        {
+            return new ComparableCriteriaBuilder<TItem, TProperty>(selector);
+        }
     }
 
-    internal class CriteriaBuilder<TItem,TProperty>  
+    internal class CriteriaBuilder<TItem,TProperty> 
     {
         private readonly Func<TItem, TProperty> _selector;
 
@@ -284,7 +289,25 @@ namespace Training.Specificaton
             return new AnonymousCriteria<TItem>(pet=>_selector(pet).Equals(species));
         }
     }
+    internal class ComparableCriteriaBuilder<TItem, TProperty> where TProperty : IComparable<TProperty>
+    {
+        private readonly Func<TItem, TProperty> _selector;
 
+        public ComparableCriteriaBuilder(Func<TItem, TProperty> selector)
+        {
+            _selector = selector;
+        }
+
+        public ICriteria<TItem> EqualTo(TProperty species)
+        {
+            return new AnonymousCriteria<TItem>(pet => _selector(pet).Equals(species));
+        }
+
+        public ICriteria<TItem> GreaterThan(TProperty i)
+        {
+            return new AnonymousCriteria<TItem>(pet => _selector(pet).CompareTo(i) > 0);
+        }
+    }
     class when_sorting_pets : concern_with_pets_for_sorting_and_filtering
     {
         It should_be_able_to_sort_by_name_ascending = () =>
