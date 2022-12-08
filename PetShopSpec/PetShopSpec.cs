@@ -244,6 +244,16 @@ namespace Training.Specificaton
             var foundPets = subject.AllPets().ThatSatisfy(criteria);
             foundPets.ShouldContainOnly(cat_Tom, cat_Jinx, dog_Huckelberry, dog_Lassie, dog_Pluto, rabbit_Fluffy);
         };
+        private It should_be_able_to_find_pets_with_no_surpisese = () =>
+        {
+            var builderForNegatedcriteria = Where<Pet>.HasAn(p => p.species).Not();
+            var criteria = builderForNegatedcriteria.EqualTo(Species.Mouse);
+            var criteria1 = builderForNegatedcriteria.Not().EqualTo(Species.Cat); 
+            var foundPets = subject.AllPets().ThatSatisfy(criteria);
+            foundPets.ShouldContainOnly(cat_Tom, cat_Jinx, dog_Huckelberry, dog_Lassie, dog_Pluto, rabbit_Fluffy);
+            var foundPets1 = subject.AllPets().ThatSatisfy(criteria1);
+            
+        };
         private It should_be_able_to_find_all_pets_born_after_2010 = () =>
         {
             var criteria = Where<Pet>.HasAn(p => p.yearOfBirth).GreaterThan(2010);

@@ -5,17 +5,24 @@ namespace Training.Specificaton
     public class FilteringEntryPoint<TItem,TProperty> 
     {
         public readonly Func<TItem, TProperty> _selector;
-        public bool _negting;
+        public readonly bool _negating;
 
         public FilteringEntryPoint(Func<TItem, TProperty> selector)
         {
             _selector = selector;
+            _negating = false;
+        }
+
+        private FilteringEntryPoint(Func<TItem, TProperty> selector, bool negating)
+        {
+            _selector = selector;
+            _negating = negating;
         }
 
         public FilteringEntryPoint<TItem,TProperty> Not()
         {
-            _negting = !_negting;
-            return this;
+
+            return new FilteringEntryPoint<TItem, TProperty>(_selector, !_negating);
         }
     }
 }

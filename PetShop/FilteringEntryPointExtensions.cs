@@ -5,7 +5,7 @@ public static class FilteringEntryPointExtensions
 {
     public static ICriteria<TItem> EqualTo<TItem, TProperty>(this FilteringEntryPoint<TItem, TProperty> filteringEntryPoint, TProperty species)
     {
-        return new AnonymousCriteria<TItem>(item=> filteringEntryPoint._selector(item).Equals(species) != filteringEntryPoint._negting);
+        return new AnonymousCriteria<TItem>(item=> filteringEntryPoint._selector(item).Equals(species) != filteringEntryPoint._negating);
     }
 
     public static ICriteria<TItem> GreaterThan<TItem, TProperty>(this FilteringEntryPoint<TItem, TProperty> filteringEntryPoint, TProperty value) 
