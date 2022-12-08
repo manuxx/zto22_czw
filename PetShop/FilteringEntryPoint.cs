@@ -14,7 +14,7 @@ namespace Training.Specificaton
 
         public FilteringEntryPoint<TItem,TProperty> Not()
         {
-            _negting = true;
+            _negting = !_negting;
             return this;
         }
     }

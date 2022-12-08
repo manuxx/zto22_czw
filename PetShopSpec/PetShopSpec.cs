@@ -212,13 +212,20 @@ namespace Training.Specificaton
             foundPets.ShouldContainOnly(cat_Tom, cat_Jinx);
         };
 
-        private It should_be_able_to_find_all_mice = () =>
+        private It should_be_able_to_find_all_mice_with_double_negation = () =>
         {
-            var criteria = Where<Pet>.HasAn(p=>p.species).EqualTo(Species.Mouse);
+            var criteria = Where<Pet>.HasAn(p => p.species).Not().Not().EqualTo(Species.Mouse);
             var foundPets = subject.AllPets().ThatSatisfy(criteria);
             foundPets.ShouldContainOnly(mouse_Dixie, mouse_Jerry);
         };
-    
+
+        private It should_be_able_to_find_all_mice = () =>
+        {
+            var criteria = Where<Pet>.HasAn(p => p.species).EqualTo(Species.Mouse);
+            var foundPets = subject.AllPets().ThatSatisfy(criteria);
+            foundPets.ShouldContainOnly(mouse_Dixie, mouse_Jerry);
+        };
+
         private It should_be_able_to_find_all_female_pets = () =>
         {
             var criteria = Where<Pet>.HasAn(p => p.sex).EqualTo(Sex.Female);
