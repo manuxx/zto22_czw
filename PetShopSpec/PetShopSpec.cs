@@ -211,6 +211,7 @@ namespace Training.Specificaton
                                         .ThatSatisfy(criteria);
             foundPets.ShouldContainOnly(cat_Tom, cat_Jinx);
         };
+
         private It should_be_able_to_find_all_mice = () =>
         {
             var criteria = Where<Pet>.HasAn(p=>p.species).EqualTo(Species.Mouse);
@@ -220,7 +221,8 @@ namespace Training.Specificaton
     
         private It should_be_able_to_find_all_female_pets = () =>
         {
-            var foundPets = subject.AllFemalePets();
+            var criteria = Where<Pet>.HasAn(p => p.sex).EqualTo(Sex.Female);
+            var foundPets = subject.AllPets().ThatSatisfy(criteria);
             foundPets.ShouldContainOnly(dog_Lassie, mouse_Dixie);
         };
         
@@ -236,7 +238,8 @@ namespace Training.Specificaton
         };
         private It should_be_able_to_find_all_pets_born_after_2010 = () =>
         {
-            var foundPets = subject.AllPetsBornAfter2010();
+            var criteria = Where<Pet>.HasAn(p => p.yearOfBirth).GreaterThan(2010);
+            var foundPets = subject.AllPets().ThatSatisfy(criteria);
             foundPets.ShouldContainOnly(dog_Pluto, rabbit_Fluffy, mouse_Dixie, mouse_Jerry);
         };
   
