@@ -239,7 +239,7 @@ namespace Training.Specificaton
         };
         private It should_be_able_to_find_all_pets_born_after_2010 = () =>
         {
-            var criteria = Where<Pet>.HasComparable(p => p.yearOfBirth).GreaterThan(2010);
+            var criteria = Where<Pet>.HasAn(p => p.yearOfBirth).GreaterThan(2010);
             var foundPets = subject.AllPets().ThatSatisfy(criteria);
             foundPets.ShouldContainOnly(dog_Pluto, rabbit_Fluffy, mouse_Dixie, mouse_Jerry);
         };
@@ -269,11 +269,7 @@ namespace Training.Specificaton
         {
             return new CriteriaBuilder<TItem,TProperty>(selector);
         }
-        public static ComparableCriteriaBuilder<TItem, TProperty> HasComparable<TProperty>(Func<TItem, TProperty> selector) where TProperty : IComparable<TProperty>
-        {
-            return new ComparableCriteriaBuilder<TItem, TProperty>(selector);
-        }
-    }
+   }
 
     internal class CriteriaBuilder<TItem,TProperty> 
     {
@@ -288,26 +284,13 @@ namespace Training.Specificaton
         {
             return new AnonymousCriteria<TItem>(pet=>_selector(pet).Equals(species));
         }
-    }
-    internal class ComparableCriteriaBuilder<TItem, TProperty> where TProperty : IComparable<TProperty>
-    {
-        private readonly Func<TItem, TProperty> _selector;
 
-        public ComparableCriteriaBuilder(Func<TItem, TProperty> selector)
+        public ICriteria<TItem> GreaterThan(IComparable<TProperty> value)
         {
-            _selector = selector;
-        }
-
-        public ICriteria<TItem> EqualTo(TProperty species)
-        {
-            return new AnonymousCriteria<TItem>(pet => _selector(pet).Equals(species));
-        }
-
-        public ICriteria<TItem> GreaterThan(TProperty i)
-        {
-            return new AnonymousCriteria<TItem>(pet => _selector(pet).CompareTo(i) > 0);
+            return new AnonymousCriteria<TItem>(pet => value.CompareTo(_selector(pet)) < 0);
         }
     }
+    
     class when_sorting_pets : concern_with_pets_for_sorting_and_filtering
     {
         It should_be_able_to_sort_by_name_ascending = () =>
